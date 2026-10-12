@@ -39,6 +39,10 @@ class StaffService
             $query->where('staff_category_id', $filters['staff_category_id']);
         }
 
+        if (array_key_exists('staff_id', $filters) && $filters['staff_id'] !== null && $filters['staff_id'] !== '') {
+            $query->where('id', (int) $filters['staff_id']);
+        }
+
         Query::sort($query, $filters['sort'] ?? null, $filters['direction'] ?? null, ['id', 'full_name', 'joining_date', 'status', 'staff_code'], 'full_name');
 
         return $query->paginate(Query::perPage($filters['per_page'] ?? null))->withQueryString();

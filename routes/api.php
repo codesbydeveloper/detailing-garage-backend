@@ -76,8 +76,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/work-types/{workType}', [WorkTypeController::class, 'show'])->middleware('permission:jobs.view,settings.view');
         Route::get('/lead-statuses', [LeadStatusController::class, 'index'])->middleware('permission:leads.view,settings.view');
         Route::get('/lead-statuses/{leadStatus}', [LeadStatusController::class, 'show'])->middleware('permission:leads.view,settings.view');
-        Route::get('/staff-categories', [StaffCategoryController::class, 'index'])->middleware('permission:staff.view,settings.view');
-        Route::get('/staff-categories/{staffCategory}', [StaffCategoryController::class, 'show'])->middleware('permission:staff.view,settings.view');
+        Route::get('/staff-categories', [StaffCategoryController::class, 'index'])->middleware('permission:staff.view,settings.view,attendance.my');
+        Route::get('/staff-categories/{staffCategory}', [StaffCategoryController::class, 'show'])->middleware('permission:staff.view,settings.view,attendance.my');
 
         Route::get('/vendors', [VendorController::class, 'index'])->middleware('permission:vendors.view');
         Route::post('/vendors', [VendorController::class, 'store'])->middleware('permission:vendors.create');
@@ -85,7 +85,7 @@ Route::prefix('v1')->group(function () {
         Route::put('/vendors/{vendor}', [VendorController::class, 'update'])->middleware('permission:vendors.update');
         Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->middleware('permission:vendors.delete');
 
-        Route::get('/staff/directory', [StaffController::class, 'directory'])->middleware('permission:staff.view,attendance.view');
+        Route::get('/staff/directory', [StaffController::class, 'directory'])->middleware('permission:staff.view,attendance.view,attendance.my');
         Route::get('/staff', [StaffController::class, 'index'])->middleware('permission:staff.view');
         Route::get('/staff/{staff}', [StaffController::class, 'show'])->middleware('permission:staff.view');
 

@@ -31,6 +31,16 @@ class StaffController extends ApiController
         $filters = $this->listFilters($request, [
             'staff_category_id' => ['nullable', 'integer'],
         ]);
+
+        $user = $request->user();
+        $selfOnly = ! $user->isOwner()
+            && ! $user->hasPermission('staff.view')
+            && ! $user->hasPermission('attendance.view');
+
+        if ($selfOnly) {
+            $filters['staff_id'] = $user->staff_id ?: 0;
+        }
+
         $paginator = $staff->paginate($filters);
 
         return response()->json([
