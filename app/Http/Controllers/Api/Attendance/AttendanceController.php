@@ -49,7 +49,7 @@ class AttendanceController extends ApiController
         return $this->success($attendance->summary(
             (int) ($data['year'] ?? now()->year),
             (int) ($data['month'] ?? now()->month),
-            isset($data['staff_id']) ? (int) $data['staff_id'] : null,
+            $this->scopedStaffId($request, isset($data['staff_id']) ? (int) $data['staff_id'] : null),
         ), 'Attendance summary loaded');
     }
 
@@ -65,10 +65,38 @@ class AttendanceController extends ApiController
         $rows = $attendance->monthly(
             (int) ($data['year'] ?? now()->year),
             (int) ($data['month'] ?? now()->month),
-            isset($data['staff_id']) ? (int) $data['staff_id'] : null,
+            $this->scopedStaffId($request, isset($data['staff_id']) ? (int) $data['staff_id'] : null),
         );
 
         return $this->success(AttendanceResource::collection($rows)->resolve($request), 'Monthly attendance loaded');
+    }
+
+    /**
+     * Staff with only attendance.my may view their own rows. Owner/manager keep full access.
+     */
+    private function scopedStaffId(Request $request, ?int $requestedStaffId): ?int
+    {
+        $user = $request->user();
+
+        if ($user->hasPermission('attendance.view') || $user->isOwner()) {
+            return $requestedStaffId;
+        }
+
+        if (! $user->staff_id) {
+            abort(response()->json([
+                'success' => false,
+                'message' => 'Forbidden',
+            ], 403));
+        }
+
+        if ($requestedStaffId !== null && (int) $requestedStaffId !== (int) $user->staff_id) {
+            abort(response()->json([
+                'success' => false,
+                'message' => 'Forbidden',
+            ], 403));
+        }
+
+        return (int) $user->staff_id;
     }
 
     public function show(Attendance $attendance): JsonResponse

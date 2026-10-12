@@ -1,0 +1,14 @@
+curl --url 'http://localhost:5175/api/v1/staff-categories' \
+  -H 'Accept: application/json' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Authorization: Bearer 6|e6uXO8EkYvzCWTqWKHe2nGTyJ6xiVB4SttkeM89x931d6fee' \
+  -H 'Connection: keep-alive' \
+  -b '_ga=GA1.1.952054504.1789647963; _fbp=fb.0.1789647963005.853542594423400048; role=admin; twilio_user=0; email_verified=false; email=paragshah.devac@gmail.com; user_plan=8; user_plan_title=Richa%20Trial%20Pack; _ga_6SPD5RX0DN=GS2.1.s1790063811$o3$g0$t1790063811$j60$l0$h0' \
+  -H 'Referer: http://localhost:5175/my-attendance' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Google Chrome";v="155", "Chromium";v="155", "Not(A:Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"'

@@ -91,8 +91,8 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/attendance/my', [AttendanceController::class, 'mine'])->middleware('permission:attendance.my,attendance.view');
         Route::get('/attendance/today', [AttendanceController::class, 'today'])->middleware('permission:attendance.view');
-        Route::get('/attendance/monthly', [AttendanceController::class, 'monthly'])->middleware('permission:attendance.view');
-        Route::get('/attendance/summary', [AttendanceController::class, 'summary'])->middleware('permission:attendance.view');
+        Route::get('/attendance/monthly', [AttendanceController::class, 'monthly'])->middleware('permission:attendance.view,attendance.my');
+        Route::get('/attendance/summary', [AttendanceController::class, 'summary'])->middleware('permission:attendance.view,attendance.my');
         Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->middleware('permission:attendance.my,attendance.manage');
         Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut'])->middleware('permission:attendance.my,attendance.manage');
         Route::get('/attendance', [AttendanceController::class, 'index'])->middleware('permission:attendance.view');
